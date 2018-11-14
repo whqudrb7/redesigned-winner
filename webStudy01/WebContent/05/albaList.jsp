@@ -34,7 +34,7 @@
 		<tbody>
 
 			<%
-				Map<String, AlbasengVO> list = SimpleFormProcessServlet.albaseng;
+				Map<String, AlbasengVO> list = (Map<String, AlbasengVO>)
 				for(String key :list.keySet()){
 			%>
 					
