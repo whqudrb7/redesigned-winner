@@ -7,19 +7,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<!-- simpleForm에서 받아오는 모든 파라미터를 String타입등의 변수값으로 확보 -->
 <% 
-
-Map<String, String> gradeMap = (Map<String,String>)application.getAttribute("gradeMap");
-Map<String, String> licenseMap = (Map<String,String>)application.getAttribute("licenseMap");
-
-AlbasengVO albaVO = (AlbasengVO)request.getAttribute("albaVO");
-if(albaVO == null) albaVO = new AlbasengVO(); //null 방지
-
-Map<String,String> errors = (Map<String,String>)request.getAttribute("errors");
-if(errors == null) errors = new LinkedHashMap<>(); //null 방지
-
-%>    
+// 	Map<String, String> gradeMap = (Map<String,String>)application.getAttribute("gradeMap");
+// 	Map<String, String> licenseMap = (Map<String,String>)application.getAttribute("licenseMap");
+	
+// 	AlbasengVO albaVO = (AlbasengVO)request.getAttribute("albaVO");
+// 	if(albaVO == null){
+// 		albaVO = new AlbasengVO(); //null 방지
+// 	}		
+// 	Map<String,String> errors = (Map<String,String>)request.getAttribute("errors");
+// 	if(errors == null){
+// 		errors = new LinkedHashMap<>(); //null 방지
+// 	}
+%>
+<jsp:useBean id="gradeMap" class="java.util.HashMap" scope="application"></jsp:useBean> <!-- id는 속성명, class는 타입 scope는 넷중하나 -->
+<jsp:useBean id="licenseMap" class="java.util.LinkedHashMap" scope="application"></jsp:useBean>
+<jsp:useBean id="albaVO" class="kr.or.ddit.vo.AlbasengVO" scope="request"></jsp:useBean>    
+<jsp:useBean id="errors" class="java.util.LinkedHashMap" scope="request"></jsp:useBean>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,7 +107,8 @@ if(errors == null) errors = new LinkedHashMap<>(); //null 방지
 					<option value="">학력</option>
 					<%
 						String pattern = "<option value='%s' %s>%s</option>";
-						for(Entry<String,String> entry : gradeMap.entrySet()){
+						for(Object obj : gradeMap.entrySet()){
+							Entry entry = (Entry)obj;
 							String selected = "";
 							if(entry.getKey().equals(albaVO.getGrade())){
 								selected = "selected";
@@ -130,7 +135,8 @@ if(errors == null) errors = new LinkedHashMap<>(); //null 방지
 						if(albaVO.getLicense()!=null){
 							Arrays.sort(albaVO.getLicense());
 						}
-						for(Entry<String,String> entry : licenseMap.entrySet()){
+						for(Object obj : licenseMap.entrySet()){
+							Entry entry = (Entry)obj;
 							String selected = "";
 							if(albaVO.getLicense()!=null && Arrays.binarySearch(albaVO.getLicense(), entry.getKey()) >-1){
 								selected = "selected";

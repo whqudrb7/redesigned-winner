@@ -34,7 +34,8 @@
 		<tbody>
 
 			<%
-				Map<String, AlbasengVO> list = (Map<String, AlbasengVO>)
+			
+				Map<String, AlbasengVO> list = (Map<String, AlbasengVO>) getServletContext().getAttribute("albaseng");
 				for(String key :list.keySet()){
 			%>
 					

@@ -26,6 +26,7 @@ import kr.or.ddit.vo.AlbasengVO;
 public class SimpleFormProcessServlet extends HttpServlet {
 	public Map<String, String> gradeMap;
 	public Map<String, String> licenseMap;
+	
 	 {
 		gradeMap = new HashMap<String, String>();
 		licenseMap = new LinkedHashMap<String, String>();
@@ -109,7 +110,7 @@ public class SimpleFormProcessServlet extends HttpServlet {
 			redirect = true;
 		}else {
 			goPage = "/01/simpleForm.jsp";
-		}
+		} 
 		if(redirect) {
 			resp.sendRedirect(req.getContextPath()+goPage);
 		}else {

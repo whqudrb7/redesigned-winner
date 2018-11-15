@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous">
-</script>
 <script type="text/javascript">
 	$(function(){
 		var imgArea = $("#imgArea");
@@ -19,8 +9,6 @@
 		});
 	});
 </script>
-</head>
-<body>
 	<form name="imgForm" action="imageService" method="get"> <!-- 입력데이터를 보내주기 위해서는 꼭 form태그가 필요하다 -->
 		<select name="image"> 
 			@option
@@ -30,5 +18,3 @@
 	<div id="imgArea">
 		
 	</div>
-</body>
-</html>

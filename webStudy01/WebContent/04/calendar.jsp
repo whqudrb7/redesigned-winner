@@ -7,11 +7,6 @@
 												 static형태의  메서드나 변수를 호출할수있다. -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>04/calendar.jsp</title>
 <style>
 	.sunday{
 		background-color: red;
@@ -30,17 +25,16 @@
 </style>
 <script>
 	function eventHandler(year, month){
-		var form = document.forms[0] //이렇게하면 현재 문서에 들어있는 form태그의 모든 레퍼런스를 들고온다.
+		var form = document.calForm; //이렇게하면 현재 문서에 들어있는 form태그의 모든 레퍼런스를 들고온다.
 		if((year && month) || month==0){
 			form.year.value = year;
 			form.month.value = month;
+			
 		}
 		form.submit();
 		return false;
 	}
 </script>
-</head>
-<body>
 	<%
 		request.setCharacterEncoding("UTF-8");
 		String yearStr = request.getParameter("year");
@@ -77,7 +71,8 @@
 		
 		Locale[] locales = Locale.getAvailableLocales();
 	%>
-	<form>
+	<form name="calForm" method="post">
+	<input type="hidden" name="command" value="calendar"/>
 	<h4>
 	<a href="javascript:eventHandler(<%=beforeYear%>,<%=beforeMonth%>);">이전달</a> <!-- calendar.jsp는 상대경로이기 때문에 
 							   클라이언트 사이드 방식으로 작성해줘야 한다.  -->
@@ -155,5 +150,3 @@
 				%>
 	</tbody>
 	</table>
-</body>
-</html>
