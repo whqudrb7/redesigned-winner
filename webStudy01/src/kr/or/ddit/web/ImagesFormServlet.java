@@ -2,59 +2,95 @@ package kr.or.ddit.web;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ImagesFormServlet extends HttpServlet {
+import kr.or.ddit.utils.CookieUtil;
+
+public class ImagesFormServlet extends HttpServlet{
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html;charset=UTF-8");
-		ServletContext context = req.getServletContext();
-		String contentFolder = context.getInitParameter("contentFolder");
+
+		ServletContext context =  req.getServletContext();
 		File folder = (File)context.getAttribute("contentFolder");
-		String[] filenames = folder.list(new FilenameFilter() {
-			@Override
-			public boolean accept(File dir, String name) {
-				String mime = context.getMimeType(name);
-				return mime.startsWith("image/");
-			}
+		
+		String[] filenames = folder.list((File dir, String name) -> {
+			String mime = context.getMimeType(name);
+		    return mime.startsWith("image/");
 		});
+		
+		// action 속성의 값은 context/imgService, method="get"
+//		InputStream in = this.getClass().getResourceAsStream("imageView.html");
+//		InputStreamReader isr = new InputStreamReader(in, "UTF-8");
+//		BufferedReader br = new BufferedReader(isr);
+//		
+//		StringBuffer html = new StringBuffer();
+//		String temp = null;
+//		while((temp = br.readLine()) != null){
+//			html.append(temp);
+//		}	
+		
 		StringBuffer sb = new StringBuffer();
-		String pattern = "<option>%s</option>\n";
-		for(String name : filenames) {
-			sb.append(String.format(pattern, name));
+		//String pattern = "<option value='%s'>%s</option>";
+		for(int i = 0; i < filenames.length; i++) {
+			sb.append("<option value='"+filenames[i]+"'>"+filenames[i]+"</option>");
 		}
 		
-		InputStream in = this.getClass().getResourceAsStream("imageForm.html");
-		InputStreamReader isr = new InputStreamReader(in, "UTF-8"); //바이트스트림으로받아서 캐릭터스트림으로 변환해주는 역할을 한다.
-		BufferedReader br = new BufferedReader(isr);
-		StringBuffer html = new StringBuffer(); //메모리 공간 , 힙메모리에 할당됨.
-		String temp = null;
-		while((temp = br.readLine())!= null){		//내부에 버퍼가 있기때문에 한줄씩 통으로 읽을 수 있다.
-			html.append(temp+"\n");
-		}	
+//		int start = html.indexOf("@option");	
+//		int end = start + "@option".length();	
+//		
+//		
+//		String replaceText = sb.toString();
+//		html.replace(start,end,replaceText);
 		
-		int start = html.indexOf("@option");
-		int end = start+"@option".length();
-		String replacetext = sb.toString();
+		req.setAttribute("optionsAttr", sb.toString());
 		
-		html.replace(start, end, replacetext);
+		// A,B
+		String imgCookieValue = new CookieUtil(req).getCookieValue("imageCookie");
+		StringBuffer imgTags = new StringBuffer();
+		if(imgCookieValue!=null) {
+			// unmarshalling
+			ObjectMapper mapper = new ObjectMapper();
+			String[] imgNames = mapper.readValue(imgCookieValue, String[].class);
+			String imgPattern = "<img src='imgService?imageSel=%s' />";
+			for(String imgName : imgNames) {
+				imgTags.append(
+					String.format(imgPattern, imgName)	
+					);
+			}
+		}
+		req.setAttribute("imgTags", imgTags);
+//		start = html.indexOf("@images");	
+//		end = start + "@images".length();
+//		html.replace(start, end, imgTags.toString());
+		String view = "/WEB-INF/views/imageView.jsp";
+		RequestDispatcher rd = req.getRequestDispatcher(view);
+		rd.include(req, resp);
 		
-		PrintWriter out = resp.getWriter();
-		out.println(html.toString());
+//		PrintWriter out = resp.getWriter();
+//		out.println(html);
 //		out.close();
+		
 	}
 }
 
-// action 속성의 값은 context/imageService, method="get"
+
+
+
+
+
+
+

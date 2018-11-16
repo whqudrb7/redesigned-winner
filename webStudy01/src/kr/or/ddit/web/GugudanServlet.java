@@ -12,7 +12,6 @@ public class GugudanServlet extends HttpServlet{
 		//여기에만 구구단을 구현해주면 된다.
 		String minDanStr = req.getParameter("minDan"); //값을 받아올때 input 타입의 name속성값으로 받아온다.
 		String maxDanStr = req.getParameter("maxDan"); //반환타입은 input에서는 타입을 number로했어도 넘어올때는 String으로 넘어온다.
-		
 		int minDan = 2;
 		int maxDan = 9;
 		if(minDanStr!=null && minDanStr.matches("\\d")) {
