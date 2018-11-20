@@ -1,8 +1,8 @@
 package kr.or.ddit.web.useragent;
 
 public enum SystemType {
-	DESKTOP(new String[] {"windows nt", "linux"}, "데스크탑"), 
-	MOBILE(new String[] {"android", "iphone"}, "모바일"),
+	DESKTOP(new String[] {"windows nt","linux"},"데스크탑"), 
+	MOBILE(new String[] {"android","iphone"},"모바일"),
 	OTHER(new String[] {},"기타등등");
 	private String[] keywords;
 	private String systemName;
@@ -14,14 +14,13 @@ public enum SystemType {
 	public String getSystemName() {
 		return systemName;
 	}
+	
 	public boolean matches(String userAgent){
 		userAgent = userAgent.toLowerCase();
 		boolean result = false;
-		for(String word:keywords) {
+		for(String word : keywords) {
 			result = userAgent.contains(word);
-			if(result) {
-				break;
-			}
+			if(result) break;
 		}
 		return result;
 	}
@@ -34,6 +33,6 @@ public enum SystemType {
 				break;
 			}
 		}
-		return result;
+		return result; 
 	}
 }

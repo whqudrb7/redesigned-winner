@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
   <display-name>webStudy01</display-name>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
@@ -9,6 +9,7 @@
   	<param-name>param1</param-name>
   	<param-value>paramValue1</param-value>
   </context-param>
+
   <context-param>
   	<param-name>contentFolder</param-name>
   	<param-value>d:/contents</param-value>
@@ -22,13 +23,14 @@
     	<param-value>testParamValue</param-value>
     </init-param>
   </servlet>
+  
   <servlet-mapping>
     <servlet-name>DescriptionServlet</servlet-name>
     <url-pattern>/desc</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-  	<servlet-name>ImagesFormServlet</servlet-name>
+  <servlet> 
+    <servlet-name>ImagesFormServlet</servlet-name>
   	<servlet-class>kr.or.ddit.web.ImagesFormServlet</servlet-class>
   </servlet>
   <servlet-mapping>
@@ -36,15 +38,14 @@
   	<url-pattern>/imageForm</url-pattern>
   </servlet-mapping>
   
-  
   <servlet>
   	<servlet-name>CalculateServlet</servlet-name>
   	<servlet-class>kr.or.ddit.web.CalculateServlet</servlet-class>
-  	<load-on-startup>1</load-on-startup>
+	<load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
   	<servlet-name>CalculateServlet</servlet-name>
-  	<url-pattern>/calculate</url-pattern>
+	<url-pattern>/calculate</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -53,18 +54,17 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>MusicLyricsServlet</servlet-name>
-  	<url-pattern>/songs</url-pattern>
+	<url-pattern>/musicLyrics</url-pattern>
   </servlet-mapping>
   
-<!--   <servlet>
+  <!-- <servlet>
   	<servlet-name>SimpleFormProcessServlet</servlet-name>
   	<servlet-class>kr.or.ddit.web.SimpleFormProcessServlet</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>SimpleFormProcessServlet</servlet-name>
-  	<url-pattern>/albamon</url-pattern>
-  </servlet-mapping>  -->
-  
+	<url-pattern>/albamon</url-pattern>
+  </servlet-mapping> -->
   
   <session-config>
   	<session-timeout>4</session-timeout>
@@ -78,5 +78,5 @@
 <!--   		</include-prelude> -->
 <!--   	</jsp-property-group> -->
 <!--   </jsp-config> -->
-  
+	  
 </web-app>

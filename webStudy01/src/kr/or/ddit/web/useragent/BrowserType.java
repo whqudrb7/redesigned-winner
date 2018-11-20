@@ -1,7 +1,7 @@
 package kr.or.ddit.web.useragent;
 
 public enum BrowserType {
-	CHROME("크롬"), FiREFOX("파이어폭스"), TRIDENT("익스플로러"), OTHER("기타");
+	CHROME("크롬"), FIREFOX("파이어폭스"), TRIDENT("익스플로러"), OTHER("기타");
 	private String browserName;
 	BrowserType(String browserName){
 		this.browserName = browserName;
@@ -10,7 +10,8 @@ public enum BrowserType {
 	public String getBrowserName() {
 		return browserName;
 	}
-	public static BrowserType getBrowserType(String userAgent){
+	
+	public static BrowserType getBrowerType(String userAgent){
 		BrowserType result = BrowserType.OTHER; 
 		BrowserType[] types = values();
 		for(BrowserType tmp : types) {

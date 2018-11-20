@@ -1,55 +1,75 @@
 package kr.or.ddit.web;
-import java.io.*;
+
 import javax.servlet.http.*;
+import java.io.*;
 import javax.servlet.*;
+import java.util.*;
 import javax.servlet.annotation.*;
 
-@WebServlet(value="/gugudan.do")
-public class GugudanServlet extends HttpServlet{
+@WebServlet(value = "/gugudan.do")
+public class GugudanServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//get이나 post방식 둘다 구구단을 만드는 것이라면 그전에 미리 먼저 실행되는 service를 오버라이딩해서
-		//여기에만 구구단을 구현해주면 된다.
-		String minDanStr = req.getParameter("minDan"); //값을 받아올때 input 타입의 name속성값으로 받아온다.
-		String maxDanStr = req.getParameter("maxDan"); //반환타입은 input에서는 타입을 number로했어도 넘어올때는 String으로 넘어온다.
+		// getParameter의 이름값은 input태그의 name속성으로 결정된다.
+		// 여기서 문제점은 분명 input태그에선 number로 받아주지만 req.getParameter의 반환값은 String타입이다.
+		// 그런 이유로 데이터를 파싱해 가져올 필요가 있다.
+		String minDanStr = req.getParameter("minDan");
+		String maxDanStr = req.getParameter("maxDan");
+
+		// 하지만 클라이언트로 넘어오는 데이터 자체는 반드시 검증이 필요하다.
 		int minDan = 2;
 		int maxDan = 9;
-		if(minDanStr!=null && minDanStr.matches("\\d")) {
+
+		if (minDanStr != null && minDanStr.matches("\\d")) {
 			minDan = Integer.parseInt(minDanStr);
 		}
-		if(maxDanStr!=null && maxDanStr.matches("[0-9]")){
+		if (maxDanStr != null && maxDanStr.matches("[0-9]")) {
 			maxDan = Integer.parseInt(maxDanStr);
 		}
+
 		// 2~9단까지의 구구단을 table 태그를 이용하여 출력.
-		// 단, 한행에 한단씩.
-		// 테스트시에 /gugudan.do 요청을 사용.
+		// 단, 한 행에 한단씩.
+		// 테스트시에는 /gugudan.do 요청을 사용
 		// web.xml을 사용하지 말것.
+
 		resp.setContentType("text/html;charset=UTF-8");
 		InputStream in = this.getClass().getResourceAsStream("gugudan.205");
-		InputStreamReader isr = new InputStreamReader(in, "UTF-8"); //바이트스트림으로받아서 캐릭터스트림으로 변환해주는 역할을 한다.
-		BufferedReader br = new BufferedReader(isr);
+		InputStreamReader isr = new InputStreamReader(in, "UTF-8"); // 바이트로 받아서 캐릭터로 변환시켜주는 녀석이다.
+		BufferedReader br = new BufferedReader(isr); // 캐릭터스트림이며 이미 버퍼를 가지고 있는 형태이다.
 		StringBuffer html = new StringBuffer();
+
+		// html의 엔드오브파일(eof)을 만날때까지 읽어들여야 한다.
 		String temp = null;
-		while((temp = br.readLine())!= null){		//내부에 버퍼가 있기때문에 한줄씩 통으로 읽을 수 있다.
+		while ((temp = br.readLine()) != null) {
 			html.append(temp);
-		}	
-		
-		StringBuffer sb = new StringBuffer(); 
-		for(int i=minDan; i<=maxDan; i++){
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		for (int dan = minDan; dan <= maxDan; dan++) {
 			sb.append("<tr>");
-			for(int j=1; j<=9; j++){
-				sb.append(String.format("<td>%d * %d= %d</td>", i, j, i*j));
+			for (int i = 1; i <= 9; i++) {
+				sb.append(String.format("<td>%d * %d = %d</td>", dan, i, dan * i));
 			}
 			sb.append("</tr>");
 		}
+
 		int start = html.indexOf("@gugudan");
-		int end = start+"@gugudan".length();
+		int end = start + "@gugudan".length();
 		String replacetext = sb.toString();
-		
+
 		html.replace(start, end, replacetext);
-		
+
 		PrintWriter out = resp.getWriter();
 		out.println(html.toString());
 //		out.close();
 	}
+
+	/*
+	 * public void doGet(HttpServletRequest req, HttpServletResponse resp) throws
+	 * IOException, ServletException { gugudan(req,resp); }
+	 * 
+	 * @Override protected void doPost(HttpServletRequest req, HttpServletResponse
+	 * resp) throws ServletException, IOException { gugudan(req,resp); }
+	 */
 }

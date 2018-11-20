@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	@import url('https://fonts.googleapis.com/css?family=Nanum+Brush+Script');
+	*{
+		font-family: 'Nanum Brush Script', cursive;
+		font-size: 30px;
+		text-align: center;
+	}	
+</style>
+</head>
+<body>
+
+<form action="musicLyrics" method="post" name="music"> <!--경로위치의 진짜위치는 브라우저에서 보이는 경로가 진짜임을 기억하자.-->
+<!-- post방식으로 보내주어야 body가 생성되고 그 안에 정보를 넣어 보안을 해준다. -->
+<h1>인기차트 목록 TOP5</h1>
+
+<select name="list">
+	@options
+</select>
+<input type="submit" value="전송"/>
+</form>
+</body>
+</html>

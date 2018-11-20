@@ -33,21 +33,19 @@ import javax.servlet.http.HttpServletResponse;
  * - init : 서블릿의 객체가 생성된 직후에 호출되는 메소드 (반드시 한번만 호출)
  * - service : 요청이 발생할때마다 반복 호출
  * 			       요청의 HTTP method에 따라 doXXX 계열 메소드를 호출.
- * - doGet 등의 doXXX 계열 메소드
+ * -  doGet 등의 doXXX 계열 메소드
  * 			 : 요청이 발생할때마다 반복 호출
  *  		   Http method에 따라 service에 의해 호출됨.
  * - destroy : 서블릿의 객체가 소멸되기 직전에 호출되는 메소드 (반드시 한번만 호출, classpath의 수정이 일어날시 발생)
  * 
  * 	 WAS의 서블릿을 이용한 요청 처리 단계
- * 	 클라이언트에서 요청이 들어오게되면 이 순서로 진행됨 
- *	 1) 서블릿 매핑 정보를 통해 현재 요청을 처리할 서블릿을 검색.
- *   2) 해당 서블릿의 객체 생성 여부를 판단
+ * 	 1) 서블릿 매핑 정보를 통해 현재 요청을 처리할 서블릿을 검색.
+ * 	 2) 해당 서블릿의 객체 생성 여부를 판단
  *   3) 현재 요청이 최초의 요청이라면(객체 생성 전),
- *      해당 서블릿의 객체를 생성 -> init 호출
- *      (싱글톤 정책에 따라 이미 생성된 객체에 대해 이 단계는 skip한다.)
+ *   	해당 서블릿의 객체를 생성 -> init 호출
+ *   	singleton 정책에 따라 이미 생성된 객체에 대해 skip.
  *   4) Thread pooling 정책에 따라 쓰레드 할당 -> service 호출
- *   	
- * 
+ *  
  */
 public class DescriptionServlet extends HttpServlet{
 	@Override
@@ -71,6 +69,7 @@ public class DescriptionServlet extends HttpServlet{
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		System.out.println(getServletConfig().getInitParameter("testParam"));
 		System.out.println("service 호출");
 		super.service(req, resp); //요청이 들어올때마다 반복호출됨. 또한 이 코드로 인해 doGet을 호출하게됨
