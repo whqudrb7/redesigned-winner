@@ -8,6 +8,9 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 import com.ibatis.sqlmap.client.SqlMapClientBuilder;
 
 public class CustomSqlMapClientBuilder {
+	
+
+	
 	private static SqlMapClient sqlMapClient;
 	static {
 		try(

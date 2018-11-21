@@ -1,6 +1,6 @@
+<%@page import="kr.or.ddit.ServiceResult"%>
 <%@page import="kr.or.ddit.utils.CookieUtil.TextType"%>
 <%@page import="kr.or.ddit.utils.CookieUtil"%>
-<%@page import="kr.or.ddit.member.service.AuthenticateServiceImpl.ServiceResult"%>
 <%@page import="kr.or.ddit.vo.MemberVO"%>
 <%@page import="kr.or.ddit.member.service.AuthenticateServiceImpl"%>
 <%@page import="kr.or.ddit.member.service.IAuthenticateService"%>
