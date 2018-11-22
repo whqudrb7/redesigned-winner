@@ -1,0 +1,8 @@
+<form method="get"> <!-- 입력데이터를 보내주기 위해서는 꼭 form태그가 필요하다 -->
+	최소단 : <input type="number" name="minDan"/> 
+	<!-- 서버쪽으로 넘어가는 속성값은 name이기 때문에 name대신 id로 주면 안된다 -->
+	최대단 : <input type="number" name="maxDan"/>
+	<input type="hidden" name="command" value="gugudanprocess"/>
+	<input type="submit" value="전송"/> <!-- 클릭하는 순간 이벤트가 발생하고 그 이후에 폼태그가 가지고있는 기능까지 처리한다.  --> 
+	<input type="button" value="걍버튼"/> <!-- 단순히 클릭에 대한 이벤트만 발생한다. -->
+</form>

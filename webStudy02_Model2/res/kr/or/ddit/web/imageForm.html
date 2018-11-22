@@ -1,0 +1,20 @@
+<script type="text/javascript">
+	$(function(){
+		var imgArea = $("#imgArea");
+		var pattern = '<img src="imageService?image=%v"/>';
+		$("[name='image']").on("change", function(){
+			var filename = $(this).val();
+			imgArea.append(pattern.replace("%v", filename));
+			//imgArea.html(pattern.replace("%v", filename));
+		});
+	});
+</script>
+	<form name="imgForm" action="imageService" method="get"> <!-- 입력데이터를 보내주기 위해서는 꼭 form태그가 필요하다 -->
+		<select name="image"> 
+			@option
+		</select>
+	<!-- 	<input type="submit" value="전송"/>  -->
+	</form>
+	<div id="imgArea">
+		
+	</div>
